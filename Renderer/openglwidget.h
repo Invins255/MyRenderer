@@ -42,6 +42,7 @@ private:
     //帧缓冲区
     std::unique_ptr<QOpenGLFramebufferObject> depthFBO;
     //模型渲染器组
+    std::unique_ptr<ModelRenderer> skyboxRenderer;
     QVector<std::shared_ptr<ModelRenderer>> modelRenderers;
 
     void initialize();
@@ -52,6 +53,7 @@ private:
     void loadResources();
     void renderScene();
     void renderDepthScene();
+    void renderSkybox();
 
 protected:
     void initializeGL() override;

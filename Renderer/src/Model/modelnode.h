@@ -3,31 +3,17 @@
 
 #include <QVector>
 #include <memory>
-#include <QOpenGLFunctions_4_5_Core>
 #include "Material/material.h"
 #include "Model/mesh.h"
-#include "Shaders/shader.h"
 
-class ModelNode : protected QOpenGLFunctions_4_5_Core
+class ModelNode
 {
 public:
-    ModelNode(const Mesh& mesh, const Material& material);
+    ModelNode(const std::shared_ptr<Mesh>& pMesh);
+    ModelNode(const std::shared_ptr<Mesh>& pMesh, const Material& material);
 
-    Mesh mesh;
-    Material material;
-
-    void setRenderMode(GLenum mode){_renderMode = mode;}
-    void draw(Shader& shader);
-
-private:
-    GLuint VAO = 0;
-    GLuint VBO = 0;
-    GLuint EBO = 0;
-
-    GLenum _renderMode = GL_TRIANGLES;
-
-    void bindGeometry();
-    void bindMaterial(Shader& shader);
+    std::shared_ptr<Mesh> pMesh;
+    Material mMaterial;
 };
 
 #endif // MODELNODE_H

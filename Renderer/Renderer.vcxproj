@@ -32,7 +32,7 @@
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
     <QtInstall>msvc2019</QtInstall>
-    <QtModules>core;gui;widgets;opengl;quickwidgets</QtModules>
+    <QtModules>core;gui;widgets;core5compat;opengl;quickwidgets</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
     <QMakeCodeLines>QT += openglwidgets</QMakeCodeLines>
   </PropertyGroup>

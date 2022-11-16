@@ -19,10 +19,9 @@ public:
         CUBE, SPHERE, PLANE, QUAD
     };
 
-    Mesh() = default;
     Mesh(BasicMesh type);
     Mesh(const QVector<Vertex> vertices, const QVector<unsigned int> indices);
-    virtual ~Mesh() = default;
+    ~Mesh() = default;
 
     bool hasNormals() {return _hasNormals;}
     bool hasTexcoords() {return _hasTexcoords;}

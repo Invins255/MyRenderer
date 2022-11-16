@@ -1,4 +1,4 @@
 CONFIG += no_fixpath
-QT += core gui widgets opengl quickwidgets
+QT += core gui widgets core5compat opengl quickwidgets
         
         QT += openglwidgets

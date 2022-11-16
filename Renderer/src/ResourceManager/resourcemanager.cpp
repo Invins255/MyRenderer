@@ -1,5 +1,22 @@
 #include "resourcemanager.h"
 
+QString ResourceManager::CubeMapInfo::frontPattern = "(front|posz|positivez).(jpg|png)";
+QString ResourceManager::CubeMapInfo::backPattern = "(back|negz|negativez).(jpg|png)";
+QString ResourceManager::CubeMapInfo::leftPattern = "(left|negx|negativex).(jpg|png)";
+QString ResourceManager::CubeMapInfo::rightPattern = "(right|posx|positivex).(jpg|png)";
+QString ResourceManager::CubeMapInfo::topPattern = "(top|posy|positivey).(jpg|png)";
+QString ResourceManager::CubeMapInfo::bottomPattern = "(bottom|negy|negativey).(jpg|png)";
+
+QString ResourceManager::ShaderInfo::vertexPattern = "(\\w*).(vert)";
+QString ResourceManager::ShaderInfo::fragmentPattern = "(\\w*).(frag)";
+QString ResourceManager::ShaderInfo::geometryPattern = "(\\w*).(geo)";
+
+
+ResourceManager::ResourceManager()
+{
+
+}
+
 ResourceManager::~ResourceManager()
 {
 
@@ -7,109 +24,133 @@ ResourceManager::~ResourceManager()
 
 void ResourceManager::loadResources()
 {
-    loadShader("DepthShader",
-        "D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/depthShader.vert",
-        "D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/depthShader.frag"
-    );    
-    loadShader("PhongShader",
-        "D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/phongShader.vert",
-        "D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/phongShader.frag"
-    );
-    loadShader("ShadowShader",
-        "D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/shadowShader.vert",
-        "D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/shadowShader.frag"
-    );
-
-    loadModel(Model::BasicType::CUBE);
-    loadModel(Model::BasicType::PLANE);
-    loadModel(Model::BasicType::SPHERE);
-    loadModel("D:/ProjectFiles/Cpp/Renderer/Renderer/resources/models/obj/nanosuit/nanosuit.obj");
-    loadModel("D:/ProjectFiles/Cpp/Renderer/Renderer/resources/models/fbx/Mei/Mei.fbx");
-
-
-    loadTexture("D:/ProjectFiles/Cpp/Renderer/Renderer/resources/textures/gray.png");
-
-    auto pPlane = getInstance().Models["Plane"];
-    pPlane->modelNodes[0]->material.uniform.textureID.insert("uTexture",
-                                                             getInstance().Textures["D:/ProjectFiles/Cpp/Renderer/Renderer/resources/textures/gray.png"]->textureId());
-    auto pCube = getInstance().Models["Cube"];
-    pCube->modelNodes[0]->material.uniform.textureID.insert("uTexture",
-                                                            getInstance().Textures["D:/ProjectFiles/Cpp/Renderer/Renderer/resources/textures/gray.png"]->textureId());
-    auto pSphere = getInstance().Models["Sphere"];
-    pSphere->modelNodes[0]->material.uniform.textureID.insert("uTexture",
-                                                             getInstance().Textures["D:/ProjectFiles/Cpp/Renderer/Renderer/resources/textures/gray.png"]->textureId());
-    
+    /*
+    {
+        auto pShader = loadShader(
+            "D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/skybox.vert",
+            "D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/skybox.frag"
+        );
+        shaders.insert("SkyboxShader", pShader);
+    }
+    {
+        auto pShader = loadShader(
+            "D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/depthShader.vert",
+            "D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/depthShader.frag"
+        );
+        shaders.insert("DepthShader", pShader);
+    }
+    {
+        auto pShader = loadShader(
+            "D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/phongShader.vert",
+            "D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/phongShader.frag"
+        );
+        shaders.insert("PhongShader", pShader);
+    }
+    {
+        auto pShader = loadShader(
+            "D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/shadowShader.vert",
+            "D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/shadowShader.frag"
+        );
+        shaders.insert("ShadowShader", pShader);
+    }
+    */
 }
 
-ResourceManager::ResourceManager()
+void ResourceManager::releaseResources()
 {
-
+    models.clear();
+    meshes.clear();
+    textures.clear();
+    shaders.clear();
 }
 
-void ResourceManager::loadModel(Model::BasicType type)
+const Model ResourceManager::getModel(Mesh::BasicMesh type)
 {
     QString name;
-    switch (type) {
-    case Model::BasicType::CUBE:
+    switch (type)
     {
+    case Mesh::BasicMesh::CUBE:
         name = "Cube";
-        if (Models.count(name) == 0) {
-            auto pModel = std::make_shared<Model>("", name);
-            Mesh cube(Mesh::BasicMesh::CUBE);
-            Material material;
-            pModel->modelNodes.push_back(std::make_shared<ModelNode>(cube, material));
-
-            Models.insert(name, pModel);
-        }
         break;
-    }
-    case Model::BasicType::SPHERE:
-    {
+    case Mesh::BasicMesh::SPHERE:
         name = "Sphere";
-        if (Models.count(name) == 0) {
-            auto pModel = std::make_shared<Model>("", name);
-            Mesh sphere(Mesh::BasicMesh::SPHERE);
-            Material material;
-            pModel->modelNodes.push_back(std::make_shared<ModelNode>(sphere, material));
-
-            Models.insert(name, pModel);
-        }
         break;
-    }
-    case Model::BasicType::PLANE:
-    {
+    case Mesh::BasicMesh::PLANE:
         name = "Plane";
-        if (Models.count(name) == 0) {
-            auto pModel = std::make_shared<Model>("", name);
-            Mesh plane(Mesh::BasicMesh::PLANE);
-            Material material;
-            pModel->modelNodes.push_back(std::make_shared<ModelNode>(plane, material));
-
-            Models.insert(name, pModel);
-        }
         break;
-    }        
-    case Model::BasicType::QUAD:
-    {
-        name = "QUAD";
-        if (Models.count(name) == 0) {
-            auto pModel = std::make_shared<Model>("", name);
-            Mesh quad(Mesh::BasicMesh::QUAD);
-            Material material;
-            pModel->modelNodes.push_back(std::make_shared<ModelNode>(quad, material));
-
-            Models.insert(name, pModel);
-        }
+    case Mesh::BasicMesh::QUAD:
+        name = "Quad";
         break;
-    }    
     default:
         break;
     }
 
+    if (models.count(name) == 0) {
+        Model model = loadModel(name, type);
+        models.insert(name, model);
+    }
+    return models[name];
 }
 
-void ResourceManager::loadModel(const QString &path)
+const Model ResourceManager::getModel(const QString& path)
 {
+    if (models.count(path) == 0) {
+        Model model = loadModel(path);
+        models.insert(path, model);
+    }
+    return models[path];
+}
+
+std::shared_ptr<QOpenGLTexture> ResourceManager::getTexture(const QString& path)
+{
+    if (textures.count(path) == 0) {
+        auto texture = loadTexture(path);
+        textures.insert(path, texture);
+    }
+    return textures[path];
+}
+
+std::shared_ptr<QOpenGLTexture> ResourceManager::getCubeMap(const QString& path)
+{    
+    if (textures.count(path) == 0) {
+        CubeMapInfo info = findCubeMap(path);
+        auto cubeTexture = loadCubeMap(info.front, info.back, info.left, info.right, info.top, info.bottom);
+        textures.insert(path, cubeTexture);
+    }    
+    return textures[path];
+}
+
+std::shared_ptr<Shader> ResourceManager::getShader(const QString& path)
+{
+    if (shaders.count(path) == 0) {
+        ShaderInfo info = findShader(path);
+        auto shader = loadShader(info.vertex, info.fragment, info.geometry);
+        shaders.insert(path, shader);
+    }
+    return shaders[path];
+}
+
+Model ResourceManager::loadModel(const QString& name, Mesh::BasicMesh type)
+{
+    Model model("", name); 
+
+    //若mesh未创建，创建mesh
+    if(meshes.count(name) == 0){
+        auto pMesh = loadMesh(type);
+        meshes.insert(name, pMesh);
+    }
+
+    model.mModelNodes.push_back(ModelNode(meshes[name]));
+    
+    return model;
+}
+
+Model ResourceManager::loadModel(const QString &path)
+{
+    QString directory = path.mid(0, path.lastIndexOf('/'));
+    QString name = path.mid(path.lastIndexOf('/') + 1);
+    Model model(directory, name);
+
     Assimp::Importer importer;
     const aiScene* scene = importer.ReadFile(
         path.toStdString(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals
@@ -117,40 +158,74 @@ void ResourceManager::loadModel(const QString &path)
 
     if (scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
         qDebug() << "ERROR::ASSIMP::" << importer.GetErrorString();
-        return;
+        return model;
     }
 
-    if (Models.count(path) == 0) {
-        QString directory = path.mid(0, path.lastIndexOf('/'));
-        QString name = path.mid(path.lastIndexOf('/') + 1);
-
-        Models.insert(path, std::make_shared<Model>(directory, name));
-    }
-    auto pModel = Models[path];
-
-    processNode(scene->mRootNode, scene, *pModel);
-    auto mat = scene->mRootNode->mTransformation;
+    processNode(scene->mRootNode, scene, model);
+    
+    return model;
 }
 
-void ResourceManager::loadTexture(const QString &path)
+std::shared_ptr<Mesh> ResourceManager::loadMesh(Mesh::BasicMesh type)
 {
-    auto pTexture = std::make_shared<QOpenGLTexture>(QImage(path));
-    Textures.insert(path, pTexture);
+    return std::make_shared<Mesh>(type);
 }
 
-void ResourceManager::loadShader(const QString &name, const QString &vert, const QString &frag, const QString &geo)
+std::shared_ptr<Mesh> ResourceManager::loadMesh(const QVector<Vertex> vertices, const QVector<unsigned int> indices)
+{    
+    return std::make_shared<Mesh>(vertices, indices);
+}
+
+std::shared_ptr<QOpenGLTexture> ResourceManager::loadTexture(const QString &path)
+{    
+    return std::make_shared<QOpenGLTexture>(QImage(path));
+}
+
+std::shared_ptr<QOpenGLTexture> ResourceManager::loadCubeMap(const QString& front, const QString& back, const QString& left, const QString& right, const QString& top, const QString& bottom)
+{    
+    QImage posx = QImage(right).convertToFormat(QImage::Format_RGB888);
+    QImage posy = QImage(top).convertToFormat(QImage::Format_RGB888);
+    QImage posz = QImage(front).convertToFormat(QImage::Format_RGB888);
+    QImage negx = QImage(left).convertToFormat(QImage::Format_RGB888);
+    QImage negy = QImage(bottom).convertToFormat(QImage::Format_RGB888);
+    QImage negz = QImage(back).convertToFormat(QImage::Format_RGB888);
+
+    auto pCubeTexture = std::make_shared<QOpenGLTexture>(QOpenGLTexture::TargetCubeMap);
+    pCubeTexture->setSize(posx.width(), posx.height(), posx.depth());
+    pCubeTexture->setFormat(QOpenGLTexture::RGBFormat);
+    pCubeTexture->allocateStorage(QOpenGLTexture::RGB, QOpenGLTexture::UInt8);
+    
+    pCubeTexture->setData(0, 0, QOpenGLTexture::CubeMapPositiveX, 
+        QOpenGLTexture::RGB, QOpenGLTexture::UInt8,
+        (const void*)posx.bits());
+    pCubeTexture->setData(0, 0, QOpenGLTexture::CubeMapPositiveY,
+        QOpenGLTexture::RGB, QOpenGLTexture::UInt8,
+        (const void*)posy.bits());
+    pCubeTexture->setData(0, 0, QOpenGLTexture::CubeMapPositiveZ,
+        QOpenGLTexture::RGB, QOpenGLTexture::UInt8,
+        (const void*)posz.bits());
+    pCubeTexture->setData(0, 0, QOpenGLTexture::CubeMapNegativeX,
+        QOpenGLTexture::RGB, QOpenGLTexture::UInt8,
+        (const void*)negx.bits());
+    pCubeTexture->setData(0, 0, QOpenGLTexture::CubeMapNegativeY,
+        QOpenGLTexture::RGB, QOpenGLTexture::UInt8,
+        (const void*)negy.bits());
+    pCubeTexture->setData(0, 0, QOpenGLTexture::CubeMapNegativeZ,
+        QOpenGLTexture::RGB, QOpenGLTexture::UInt8,
+        (const void*)negz.bits());
+
+    pCubeTexture->generateMipMaps();
+    pCubeTexture->setWrapMode(QOpenGLTexture::ClampToEdge);
+    pCubeTexture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+    pCubeTexture->setMagnificationFilter(QOpenGLTexture::LinearMipMapLinear);
+
+    return pCubeTexture;
+}
+
+std::shared_ptr<Shader> ResourceManager::loadShader(const QString& vert, const QString& frag, const QString& geo)
 {
-    auto pShader = std::make_shared<Shader>(vert, frag, geo);
-    Shaders.insert(name, pShader);
+    return std::make_shared<Shader>(vert, frag, geo);
 }
-
-void ResourceManager::releaseResources()
-{
-    Models.clear();
-    Textures.clear();
-    Shaders.clear();
-}
-
 
 void ResourceManager::processNode(aiNode* node, const aiScene* scene, Model& model)
 {
@@ -214,7 +289,12 @@ void ResourceManager::processMesh(aiMesh* mesh, const aiScene* scene, Model& mod
         }
     }
 
-    Mesh mMesh(vertices, indices);
+    QString path = model.directory() + "/" + model.name() + "/" + QString(mesh->mName.C_Str()) + "_" + QString::number(model.mModelNodes.size());
+    if(meshes.count(path) == 0){
+        auto mesh = loadMesh(vertices, indices);
+        meshes.insert(path, mesh);
+    }
+    auto pMesh = meshes[path];
 
     //material
     Material mMaterial;
@@ -260,7 +340,7 @@ void ResourceManager::processMesh(aiMesh* mesh, const aiScene* scene, Model& mod
     }
     //TODO：添加更多纹理类型
 
-    model.modelNodes.push_back(std::make_shared<ModelNode>(mMesh, mMaterial));
+    model.mModelNodes.push_back(ModelNode(pMesh, mMaterial));
 }
 
 QVector<int> ResourceManager::loadMaterialTextures(aiMaterial* mat, aiTextureType type, Model& model)
@@ -272,11 +352,125 @@ QVector<int> ResourceManager::loadMaterialTextures(aiMaterial* mat, aiTextureTyp
 
         QString path = model.directory() + "/" + QString(str.C_Str());
         //检查该纹理是否已经被加载, 若已经加载，则直接获取id，反之则将其载入
-        if (Textures.count(path) == 0) {
-            loadTexture(path);
+        if (textures.count(path) == 0) {
+            auto texture = loadTexture(path);
+            textures.insert(path, texture);
         }
-        textureIds.push_back(Textures[path]->textureId());
+        textureIds.push_back(textures[path]->textureId());
     }
 
     return textureIds;
+}
+
+ResourceManager::CubeMapInfo ResourceManager::findCubeMap(const QString& directory)
+{
+    CubeMapInfo info;
+
+    QDir dir(directory);
+    if (!dir.exists()) {
+        qDebug() << "ERROE:: Cube Map directory: " << directory << " is not exist!";
+        return info;
+    }
+
+    QRegExp rx;
+    rx.setCaseSensitivity(Qt::CaseInsensitive);
+
+    dir.setFilter(QDir::Files);
+    QFileInfoList fileInfoList = dir.entryInfoList();
+    for (int i = 0; i < fileInfoList.count(); i++) {
+        QString fileName = fileInfoList[i].fileName();
+        rx.setPattern(CubeMapInfo::frontPattern);
+        
+        if (rx.exactMatch(fileName)) {
+            info.front = directory + "/" + fileName;
+            break;
+        }
+    }
+    for (int i = 0; i < fileInfoList.count(); i++) {
+        QString fileName = fileInfoList[i].fileName();
+        rx.setPattern(CubeMapInfo::backPattern);
+        if (rx.exactMatch(fileName)) {
+            info.back = directory + "/" + fileName;
+            break;
+        }
+    }
+    for (int i = 0; i < fileInfoList.count(); i++) {
+        QString fileName = fileInfoList[i].fileName();
+        rx.setPattern(CubeMapInfo::leftPattern);
+        if (rx.exactMatch(fileName)) {
+            info.left = directory + "/" + fileName;
+            break;
+        }
+    }
+    for (int i = 0; i < fileInfoList.count(); i++) {
+        QString fileName = fileInfoList[i].fileName();
+        rx.setPattern(CubeMapInfo::rightPattern);
+        if (rx.exactMatch(fileName)) {
+            info.right = directory + "/" + fileName;
+            break;
+        }
+    }
+    for (int i = 0; i < fileInfoList.count(); i++) {
+        QString fileName = fileInfoList[i].fileName();
+        rx.setPattern(CubeMapInfo::topPattern);
+        if (rx.exactMatch(fileName)) {
+            info.top = directory + "/" + fileName;
+            break;
+        }
+    }
+    for (int i = 0; i < fileInfoList.count(); i++) {
+        QString fileName = fileInfoList[i].fileName();
+        rx.setPattern(CubeMapInfo::bottomPattern);
+        if (rx.exactMatch(fileName)) {
+            info.bottom = directory + "/" + fileName;
+            break;
+        }
+    }
+
+    return info;
+}
+
+ResourceManager::ShaderInfo ResourceManager::findShader(const QString& directory) {
+    ShaderInfo info;
+
+    QDir dir(directory);
+    if (!dir.exists()) {
+        qDebug() << "ERROE:: Shader directory: " << directory << " is not exist!";
+        return info;
+    }
+
+    QRegExp rx;
+    rx.setCaseSensitivity(Qt::CaseInsensitive);
+
+    dir.setFilter(QDir::Files);
+    QFileInfoList fileInfoList = dir.entryInfoList();
+    for (int i = 0; i < fileInfoList.count(); i++) {
+        QString fileName = fileInfoList[i].fileName();
+        rx.setPattern(ShaderInfo::vertexPattern);
+
+        if (rx.exactMatch(fileName)) {
+            info.vertex = directory + "/" + fileName;
+            break;
+        }
+    }
+    for (int i = 0; i < fileInfoList.count(); i++) {
+        QString fileName = fileInfoList[i].fileName();
+        rx.setPattern(ShaderInfo::fragmentPattern);
+
+        if (rx.exactMatch(fileName)) {
+            info.fragment = directory + "/" + fileName;
+            break;
+        }
+    }
+    for (int i = 0; i < fileInfoList.count(); i++) {
+        QString fileName = fileInfoList[i].fileName();
+        rx.setPattern(ShaderInfo::geometryPattern);
+
+        if (rx.exactMatch(fileName)) {
+            info.geometry = directory + "/" + fileName;
+            break;
+        }
+    }
+
+    return info;
 }
