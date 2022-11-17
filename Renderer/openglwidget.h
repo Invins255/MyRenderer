@@ -16,7 +16,7 @@
 #include "src/ModelRenderer/modelrenderer.h"
 #include "src/Shared/input.h"
 #include "src/ResourceManager/resourcemanager.h"
-
+#include "src/Shared/shadernamespace.h"
 
 class OpenGLWidget: public QOpenGLWidget, protected QOpenGLFunctions_4_5_Core
 {

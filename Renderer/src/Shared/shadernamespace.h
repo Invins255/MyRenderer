@@ -26,11 +26,15 @@
 #define USE_SPECULARMAP		"useSpecularTexture"
 #define USE_NORMALMAP		"useNormalTexture"
 #define USE_HEIGHTMAP		"useHeightTexture"
+#define USE_DEPTHMAP		"useDepthMap"
 
 #define DIFFUCEMAP			"uDiffuseTexture"
 #define SPECULARMAP			"uSpecularTexture"
 #define NORMALMAP			"uNormalTexture"
 #define HEIGHTMAP           "uHeightTexture"
 #define DEPTHMAP			"uDepthMap"
+
+//cubeMap
+#define CUBEMAP				"uCubeMap"
 
 #endif

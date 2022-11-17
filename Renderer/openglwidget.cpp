@@ -101,7 +101,7 @@ void OpenGLWidget::loadResources(){
     auto cubeMap = ResourceManager::getInstance().getCubeMap("D:/ProjectFiles/Cpp/Renderer/Renderer/resources/textures/skybox/Space");
     skyboxRenderer = std::make_unique<ModelRenderer>(ResourceManager::getInstance().getModel(Mesh::BasicMesh::CUBE));
     skyboxRenderer->pShaderInScene = ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/Skybox");
-    skyboxRenderer->model().mModelNodes[0].mMaterial.uniform.textureID.insert("uCubeMap", cubeMap->textureId());
+    skyboxRenderer->model().mModelNodes[0].mMaterial.addTexture(CUBEMAP, cubeMap->textureId());
     
     auto texture = ResourceManager::getInstance().getTexture("D:/ProjectFiles/Cpp/Renderer/Renderer/resources/textures/gray.png");
 
@@ -110,7 +110,7 @@ void OpenGLWidget::loadResources(){
     pPlaneRenderer->transform().scale(10.0f);
     pPlaneRenderer->pShaderInScene = ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/ShadowShader");
     pPlaneRenderer->pShaderInDepthScene = ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/DepthShader");
-    pPlaneRenderer->model().mModelNodes[0].mMaterial.uniform.textureID.insert("uTexture", texture->textureId());
+    pPlaneRenderer->model().mModelNodes[0].mMaterial.addTexture("uTexture", texture->textureId());
     addModelRenderer(pPlaneRenderer);
     
     
@@ -118,7 +118,7 @@ void OpenGLWidget::loadResources(){
     pCubeRenderer->transform().translate(QVector3D(1.5f, 0.5f, 0.0f));
     pCubeRenderer->pShaderInScene = ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/ShadowShader");
     pCubeRenderer->pShaderInDepthScene = ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/DepthShader");
-    pCubeRenderer->model().mModelNodes[0].mMaterial.uniform.textureID.insert("uTexture", texture->textureId());
+    pCubeRenderer->model().mModelNodes[0].mMaterial.addTexture("uTexture", texture->textureId());
     addModelRenderer(pCubeRenderer);
     
     
@@ -127,13 +127,14 @@ void OpenGLWidget::loadResources(){
     pSphereRenderer->setRenderMode(GL_TRIANGLE_STRIP);
     pSphereRenderer->pShaderInScene = ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/ShadowShader");
     pSphereRenderer->pShaderInDepthScene = ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/DepthShader");
-    pSphereRenderer->model().mModelNodes[0].mMaterial.uniform.textureID.insert("uTexture", texture->textureId());
+    pSphereRenderer->model().mModelNodes[0].mMaterial.addTexture("uTexture", texture->textureId());
     addModelRenderer(pSphereRenderer);
      
     
     auto pModelRenderer = std::make_shared<ModelRenderer>(ResourceManager::getInstance().getModel("D:/ProjectFiles/Cpp/Renderer/Renderer/resources/models/obj/nanosuit/nanosuit.obj"));
     pModelRenderer->pShaderInScene = ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/PhongShader");
     pModelRenderer->pShaderInDepthScene = ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/DepthShader");
+    pModelRenderer->transform().translate(QVector3D(0.0f, 0.0f, -5.0f));
     addModelRenderer(pModelRenderer);
 
 }

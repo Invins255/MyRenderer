@@ -7,6 +7,7 @@ in vec3 Normal;
 in vec2 TexCoord;
 in vec4 FragPosLightSpace;
 
+uniform bool useDepthMap;
 uniform bool useDiffuseTexture;
 uniform bool useSpecularTexture;
 uniform bool useNormalTexture;
@@ -17,6 +18,7 @@ uniform vec3 uLightPos;
 uniform vec3 uDirLightDir;
 uniform vec3 uDirLightColor;
 
+uniform sampler2D uDepthMap;
 uniform sampler2D uDiffuseTexture0;
 uniform sampler2D uSpecularTexture0;
 uniform sampler2D uNormalTexture0;

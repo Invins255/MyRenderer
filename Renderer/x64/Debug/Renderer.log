@@ -1,4 +1,8 @@
-﻿  resourcemanager.cpp
+﻿  MainWindow.cpp
+  main.cpp
+  openglwidget.cpp
+  modelrenderer.cpp
+  resourcemanager.cpp
 D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0xff7 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
 D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0xfff 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
 D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x1000 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
@@ -29,55 +33,55 @@ D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,
 D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x242b 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
 D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x242c 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
 D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x242f 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x2961 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x2963 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x2964 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x2966 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x2968 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x2f97 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x2f98 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x2f99 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x2f9b 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x2f9e 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x2f9f 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x2fa0 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x2fa3 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x2fa4 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x2fa7 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x3149 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x314a 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x314d 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x314e 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x3150 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x3152 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x3155 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x3156 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x315a 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x315b 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x315c 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x315d 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x315e 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x3160 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x3163 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x3165 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x3167 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x3168 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x3169 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x316a 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x316e 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x316f 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x3173 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x3176 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x317b 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x317c 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x317d 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x317e 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x3181 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x3183 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x3184 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x3185 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x3187 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
-D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x3189 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x2936 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x2938 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x2939 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x293b 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x293d 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x2f00 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x2f01 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x2f02 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x2f04 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x2f07 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x2f08 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x2f09 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x2f0c 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x2f0d 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x2f10 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30b2 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30b3 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30b6 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30b7 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30b9 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30bb 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30be 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30bf 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30c3 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30c4 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30c5 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30c6 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30c7 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30c9 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30cc 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30ce 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30d0 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30d1 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30d2 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30d3 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30d7 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30d8 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30dc 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30df 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30e4 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30e5 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30e6 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30e7 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30ea 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30ec 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30ed 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30ee 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30f0 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
+D:\ProjectFiles\Cpp\Renderer\Renderer\src\ResourceManager\resourcemanager.cpp(1,1): warning C4828: 文件包含在偏移 0x30f2 处开始的字符，该字符在当前源字符集中无效(代码页 65001)。
   moc_MainWindow.cpp
   moc_openglwidget.cpp
   Renderer.vcxproj -> D:\ProjectFiles\Cpp\Renderer\x64\Debug\Renderer.exe

@@ -24,36 +24,7 @@ ResourceManager::~ResourceManager()
 
 void ResourceManager::loadResources()
 {
-    /*
-    {
-        auto pShader = loadShader(
-            "D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/skybox.vert",
-            "D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/skybox.frag"
-        );
-        shaders.insert("SkyboxShader", pShader);
-    }
-    {
-        auto pShader = loadShader(
-            "D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/depthShader.vert",
-            "D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/depthShader.frag"
-        );
-        shaders.insert("DepthShader", pShader);
-    }
-    {
-        auto pShader = loadShader(
-            "D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/phongShader.vert",
-            "D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/phongShader.frag"
-        );
-        shaders.insert("PhongShader", pShader);
-    }
-    {
-        auto pShader = loadShader(
-            "D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/shadowShader.vert",
-            "D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/shadowShader.frag"
-        );
-        shaders.insert("ShadowShader", pShader);
-    }
-    */
+    
 }
 
 void ResourceManager::releaseResources()
@@ -302,41 +273,41 @@ void ResourceManager::processMesh(aiMesh* mesh, const aiScene* scene, Model& mod
     aiColor3D color;
     float value;
     material->Get(AI_MATKEY_COLOR_AMBIENT, color);
-    mMaterial.uniform.vec3.insert(MATERIAL_AMBIENT, QVector3D(color.r, color.g, color.b));
+    mMaterial.addVector(MATERIAL_AMBIENT, QVector3D(color.r, color.g, color.b));
     material->Get(AI_MATKEY_COLOR_DIFFUSE, color);
-    mMaterial.uniform.vec3.insert(MATERIAL_DIFFUSE, QVector3D(color.r, color.g, color.b));
+    mMaterial.addVector(MATERIAL_DIFFUSE, QVector3D(color.r, color.g, color.b));
     material->Get(AI_MATKEY_COLOR_SPECULAR, color);
-    mMaterial.uniform.vec3.insert(MATERIAL_SPECULAR, QVector3D(color.r, color.g, color.b));
+    mMaterial.addVector(MATERIAL_SPECULAR, QVector3D(color.r, color.g, color.b));
     material->Get(AI_MATKEY_SHININESS, value);
-    mMaterial.uniform.floats.insert(MATERIAL_SHININESS, value / 4.0f);  //数据修正
+    mMaterial.addFloat(MATERIAL_SHININESS, value / 4.0f);  //数据修正
 
     //textures
     QVector<int> diffuseTextureIds = loadMaterialTextures(material, aiTextureType_DIFFUSE, model);
-    mMaterial.uniform.bools.insert(USE_DIFFUSEMAP, diffuseTextureIds.count() != 0);
+    mMaterial.addBool(USE_DIFFUSEMAP, diffuseTextureIds.count() != 0);
     for (int i = 0; i < diffuseTextureIds.count(); i++) {
         std::string number = std::to_string(i);
-        mMaterial.uniform.textureID.insert(DIFFUCEMAP + number, diffuseTextureIds[i]);
+        mMaterial.addTexture(DIFFUCEMAP + number, diffuseTextureIds[i]);
     }
 
     QVector<int> specularTextureIds = loadMaterialTextures(material, aiTextureType_SPECULAR, model);
-    mMaterial.uniform.bools.insert(USE_SPECULARMAP, specularTextureIds.count() != 0);
+    mMaterial.addBool(USE_SPECULARMAP, specularTextureIds.count() != 0);
     for (int i = 0; i < specularTextureIds.count(); i++) {
         std::string number = std::to_string(i);
-        mMaterial.uniform.textureID.insert(SPECULARMAP + number, specularTextureIds[i]);
+        mMaterial.addTexture(SPECULARMAP + number, specularTextureIds[i]);
     }
 
     QVector<int> normalTextureIds = loadMaterialTextures(material, aiTextureType_NORMALS, model);
-    mMaterial.uniform.bools.insert(USE_NORMALMAP, normalTextureIds.count() != 0);
+    mMaterial.addBool(USE_NORMALMAP, normalTextureIds.count() != 0);
     for (int i = 0; i < normalTextureIds.count(); i++) {
         std::string number = std::to_string(i);
-        mMaterial.uniform.textureID.insert(NORMALMAP + number, normalTextureIds[i]);
+        mMaterial.addTexture(NORMALMAP + number, normalTextureIds[i]);
     }
 
     QVector<int> heightTextureIds = loadMaterialTextures(material, aiTextureType_HEIGHT, model);
-    mMaterial.uniform.bools.insert(USE_HEIGHTMAP, heightTextureIds.count() != 0);
+    mMaterial.addBool(USE_HEIGHTMAP, heightTextureIds.count() != 0);
     for (int i = 0; i < heightTextureIds.count(); i++) {
         std::string number = std::to_string(i);
-        mMaterial.uniform.textureID.insert(HEIGHTMAP + number, heightTextureIds[i]);
+        mMaterial.addTexture(HEIGHTMAP + number, heightTextureIds[i]);
     }
     //TODO：添加更多纹理类型
 

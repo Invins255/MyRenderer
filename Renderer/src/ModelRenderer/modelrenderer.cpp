@@ -61,7 +61,7 @@ void ModelRenderer::bindCamera(const Camera &camera)
 void ModelRenderer::bindDepthMap(GLuint depthMapID)
 {
     for (int i = 0; i < mModel.mModelNodes.count(); i++) {
-        mModel.mModelNodes[i].mMaterial.uniform.textureID.insert(DEPTHMAP, depthMapID);
+        mModel.mModelNodes[i].mMaterial.addTexture(DEPTHMAP, depthMapID);
     }
 }
 
@@ -166,7 +166,7 @@ void ModelRenderer::bindMaterial(Material& material)
     for (auto iter = material.uniform.textureID.begin(); iter != material.uniform.textureID.end(); iter++) {
         glActiveTexture(GL_TEXTURE0 + index);
 
-        if (iter.key() == "uDepthMap") {
+        if (iter.key() == DEPTHMAP) {
             glBindTexture(GL_TEXTURE_2D, iter.value());
 
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
@@ -174,7 +174,7 @@ void ModelRenderer::bindMaterial(Material& material)
             GLfloat borderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
             glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
         }
-        else if (iter.key() == "uCubeMap") {
+        else if (iter.key() == CUBEMAP) {
             glBindTexture(GL_TEXTURE_CUBE_MAP, iter.value());
         }
         else {
