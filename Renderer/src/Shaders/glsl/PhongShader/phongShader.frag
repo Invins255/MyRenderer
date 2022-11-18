@@ -38,6 +38,7 @@ vec3 Diffuse;
 vec3 Specular;
 
 vec3 CalcDirLight(vec3 lightDir, vec3 normal, vec3 viewDir);
+float ShadowCalculation(vec4 fragPosLightSpace);
 
 void main(){
     Ambient  = material.ambient;
@@ -64,5 +65,23 @@ vec3 CalcDirLight(vec3 lightDir, vec3 normal, vec3 viewDir){
     float spec = pow(max(dot(normal, halfwayDir), 0.0), material.shininess);
     vec3 specular = uDirLightColor * spec * Specular;
 
-    return ambient + diffuse + specular;
+    //shadow
+    float shadow = useDepthMap ? ShadowCalculation(FragPosLightSpace) : 0.0;
+
+    return ambient + (1.0 - shadow) * (diffuse + specular);
+}
+
+float ShadowCalculation(vec4 fragPosLightSpace){
+    vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
+    projCoords = projCoords * 0.5 + 0.5;
+    
+    if(projCoords.z > 1.0)
+        return 0.0;
+
+    float closestDepth = texture(uDepthMap, projCoords.xy).r;
+    float currentDepth = projCoords.z;
+    float bias = 0.005;
+    float shadow = currentDepth - bias > closestDepth ? 1.0 : 0.0;
+
+    return shadow;
 }

@@ -111,7 +111,15 @@ Model ResourceManager::loadModel(const QString& name, Mesh::BasicMesh type)
         meshes.insert(name, pMesh);
     }
 
-    model.mModelNodes.push_back(ModelNode(meshes[name]));
+    Material material;
+    material.setVector(MATERIAL_AMBIENT, QVector3D(0.3f, 0.3f, 0.3f));    
+    material.setBool(USE_DIFFUSEMAP, false);
+    material.setVector(MATERIAL_DIFFUSE, QVector3D(0.5f, 0.5f, 0.5f));
+    material.setBool(USE_SPECULARMAP, false);
+    material.setVector(MATERIAL_SPECULAR, QVector3D(0.8f, 0.8f, 0.8f));
+    material.setFloat(MATERIAL_SHININESS, 96.0f);
+    
+    model.mModelNodes.push_back(ModelNode(meshes[name], material));
     
     return model;
 }
@@ -273,41 +281,41 @@ void ResourceManager::processMesh(aiMesh* mesh, const aiScene* scene, Model& mod
     aiColor3D color;
     float value;
     material->Get(AI_MATKEY_COLOR_AMBIENT, color);
-    mMaterial.addVector(MATERIAL_AMBIENT, QVector3D(color.r, color.g, color.b));
+    mMaterial.setVector(MATERIAL_AMBIENT, QVector3D(color.r, color.g, color.b));
     material->Get(AI_MATKEY_COLOR_DIFFUSE, color);
-    mMaterial.addVector(MATERIAL_DIFFUSE, QVector3D(color.r, color.g, color.b));
+    mMaterial.setVector(MATERIAL_DIFFUSE, QVector3D(color.r, color.g, color.b));
     material->Get(AI_MATKEY_COLOR_SPECULAR, color);
-    mMaterial.addVector(MATERIAL_SPECULAR, QVector3D(color.r, color.g, color.b));
+    mMaterial.setVector(MATERIAL_SPECULAR, QVector3D(color.r, color.g, color.b));
     material->Get(AI_MATKEY_SHININESS, value);
-    mMaterial.addFloat(MATERIAL_SHININESS, value / 4.0f);  //数据修正
+    mMaterial.setFloat(MATERIAL_SHININESS, value / 4.0f);  //数据修正
 
     //textures
     QVector<int> diffuseTextureIds = loadMaterialTextures(material, aiTextureType_DIFFUSE, model);
-    mMaterial.addBool(USE_DIFFUSEMAP, diffuseTextureIds.count() != 0);
+    mMaterial.setBool(USE_DIFFUSEMAP, diffuseTextureIds.count() != 0);
     for (int i = 0; i < diffuseTextureIds.count(); i++) {
         std::string number = std::to_string(i);
-        mMaterial.addTexture(DIFFUCEMAP + number, diffuseTextureIds[i]);
+        mMaterial.setTexture(DIFFUCEMAP + number, diffuseTextureIds[i]);
     }
 
     QVector<int> specularTextureIds = loadMaterialTextures(material, aiTextureType_SPECULAR, model);
-    mMaterial.addBool(USE_SPECULARMAP, specularTextureIds.count() != 0);
+    mMaterial.setBool(USE_SPECULARMAP, specularTextureIds.count() != 0);
     for (int i = 0; i < specularTextureIds.count(); i++) {
         std::string number = std::to_string(i);
-        mMaterial.addTexture(SPECULARMAP + number, specularTextureIds[i]);
+        mMaterial.setTexture(SPECULARMAP + number, specularTextureIds[i]);
     }
 
     QVector<int> normalTextureIds = loadMaterialTextures(material, aiTextureType_NORMALS, model);
-    mMaterial.addBool(USE_NORMALMAP, normalTextureIds.count() != 0);
+    mMaterial.setBool(USE_NORMALMAP, normalTextureIds.count() != 0);
     for (int i = 0; i < normalTextureIds.count(); i++) {
         std::string number = std::to_string(i);
-        mMaterial.addTexture(NORMALMAP + number, normalTextureIds[i]);
+        mMaterial.setTexture(NORMALMAP + number, normalTextureIds[i]);
     }
 
     QVector<int> heightTextureIds = loadMaterialTextures(material, aiTextureType_HEIGHT, model);
-    mMaterial.addBool(USE_HEIGHTMAP, heightTextureIds.count() != 0);
+    mMaterial.setBool(USE_HEIGHTMAP, heightTextureIds.count() != 0);
     for (int i = 0; i < heightTextureIds.count(); i++) {
         std::string number = std::to_string(i);
-        mMaterial.addTexture(HEIGHTMAP + number, heightTextureIds[i]);
+        mMaterial.setTexture(HEIGHTMAP + number, heightTextureIds[i]);
     }
     //TODO：添加更多纹理类型
 

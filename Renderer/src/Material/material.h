@@ -29,15 +29,15 @@ public:
     Material();
     ~Material() = default;
 
-    void addInt(const std::string& name, int value) { uniform.ints.insert(name, value); }
-    void addFloat(const std::string& name, float value) { uniform.floats.insert(name, value); }
-    void addBool(const std::string& name, bool value) { uniform.bools.insert(name, value); }
-    void addVector(const std::string& name, const QVector2D& value) { uniform.vec2.insert(name, value); }
-    void addVector(const std::string& name, const QVector3D& value) { uniform.vec3.insert(name, value); }
-    void addVector(const std::string& name, const QVector4D& value) { uniform.vec4.insert(name, value); }
-    void addMatrix(const std::string& name, const QMatrix3x3& value) { uniform.matrix3.insert(name, value); }
-    void addMatrix(const std::string& name, const QMatrix4x4& value) { uniform.matrix4.insert(name, value); }
-    void addTexture(const std::string& name, GLuint value) { uniform.textureID.insert(name, value); }
+    void setInt(const std::string& name, int value) { uniform.ints[name] = value; }
+    void setFloat(const std::string& name, float value) { uniform.floats[name] = value; }
+    void setBool(const std::string& name, bool value) { uniform.bools[name] = value; }
+    void setVector(const std::string& name, const QVector2D& value) { uniform.vec2[name] = value; }
+    void setVector(const std::string& name, const QVector3D& value) { uniform.vec3[name] = value; }
+    void setVector(const std::string& name, const QVector4D& value) { uniform.vec4[name] = value; }
+    void setMatrix(const std::string& name, const QMatrix3x3& value) { uniform.matrix3[name] = value; }
+    void setMatrix(const std::string& name, const QMatrix4x4& value) { uniform.matrix4[name] = value; }
+    void setTexture(const std::string& name, GLuint value) { uniform.textureID[name] = value; }
 
     Uniform uniform;
 private:

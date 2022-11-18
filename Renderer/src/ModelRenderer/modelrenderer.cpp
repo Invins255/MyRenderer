@@ -61,7 +61,7 @@ void ModelRenderer::bindCamera(const Camera &camera)
 void ModelRenderer::bindDepthMap(GLuint depthMapID)
 {
     for (int i = 0; i < mModel.mModelNodes.count(); i++) {
-        mModel.mModelNodes[i].mMaterial.addTexture(DEPTHMAP, depthMapID);
+        mModel.mModelNodes[i].mMaterial.setTexture(DEPTHMAP, depthMapID);
     }
 }
 
@@ -69,6 +69,10 @@ void ModelRenderer::draw()
 {
     //在进行draw操作之前，需要对shader，lights，camera进行bind操作，此时已经完成对shader的初次参数传递
     bindTransform();
+
+    for (int i = 0; i < mModel.mModelNodes.count(); i++) {
+        mModel.mModelNodes[i].mMaterial.setBool(USE_DEPTHMAP, receiveShadow);
+    }
     
     pShader->bind();
     for (int i = 0; i < mModel.mModelNodes.count(); i++) {

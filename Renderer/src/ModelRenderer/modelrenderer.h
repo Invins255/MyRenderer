@@ -28,7 +28,8 @@ public:
     void draw();
 
     bool isVisible = true;
-    bool shadowCast = true;
+    bool castShadow = true;
+    bool receiveShadow = true;
     std::shared_ptr<Shader> pShaderInScene;
     std::shared_ptr<Shader> pShaderInDepthScene;
 private:

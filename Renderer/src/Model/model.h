@@ -14,6 +14,7 @@ public:
     const QString name() const { return mName; }
     const QString directory() const { return mDirectory; }
     
+
 private:    
     QString mName;
     QString mDirectory;

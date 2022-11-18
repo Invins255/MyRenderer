@@ -54,8 +54,8 @@ void OpenGLWidget::initializeFBO()
 void OpenGLWidget::initializeCamera()
 {
     camera = std::make_unique<OrbitCamera>(
-                QVector3D(0.0f, 20.0f, 20.0f),
-                QVector3D(0.0f, 10.0f, 0.0f),
+                QVector3D(0.0f, 10.0f, 10.0f),
+                QVector3D(0.0f, 5.0f, 0.0f),
                 QVector3D(0.0f, 1.0f, 0.0f)
                 );
 }
@@ -63,7 +63,7 @@ void OpenGLWidget::initializeCamera()
 void OpenGLWidget::initializeLights()
 {
     directionalLight = DirectionalLight(
-                QVector3D(5.0f, 8.0f, 10.0f),
+                QVector3D(10.0f, 10.0f, 10.0f),
                 QVector3D(0.0f, 0.0f, 0.0f),
                 QVector3D(1.0f, 1.0f, 1.0f),
                 1.0f
@@ -94,15 +94,15 @@ void OpenGLWidget::printContextInfomation()
     qDebug() << qPrintable(glType) << qPrintable(glVersion) << "(" << qPrintable(glProfile) << ")";
 }
 
-void OpenGLWidget::loadResources(){
-    ResourceManager::getInstance().loadResources();  
+void OpenGLWidget::loadResources() {
+    ResourceManager::getInstance().loadResources();
 
     //天空盒渲染器
     auto cubeMap = ResourceManager::getInstance().getCubeMap("D:/ProjectFiles/Cpp/Renderer/Renderer/resources/textures/skybox/Space");
     skyboxRenderer = std::make_unique<ModelRenderer>(ResourceManager::getInstance().getModel(Mesh::BasicMesh::CUBE));
     skyboxRenderer->pShaderInScene = ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/Skybox");
-    skyboxRenderer->model().mModelNodes[0].mMaterial.addTexture(CUBEMAP, cubeMap->textureId());
-    
+    skyboxRenderer->model().mModelNodes[0].mMaterial.setTexture(CUBEMAP, cubeMap->textureId());
+
     auto texture = ResourceManager::getInstance().getTexture("D:/ProjectFiles/Cpp/Renderer/Renderer/resources/textures/gray.png");
 
     auto pPlaneRenderer = std::make_shared<ModelRenderer>(ResourceManager::getInstance().getModel(Mesh::BasicMesh::PLANE));
@@ -110,33 +110,74 @@ void OpenGLWidget::loadResources(){
     pPlaneRenderer->transform().scale(10.0f);
     pPlaneRenderer->pShaderInScene = ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/ShadowShader");
     pPlaneRenderer->pShaderInDepthScene = ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/DepthShader");
-    pPlaneRenderer->model().mModelNodes[0].mMaterial.addTexture("uTexture", texture->textureId());
+    pPlaneRenderer->model().mModelNodes[0].mMaterial.setTexture("uTexture", texture->textureId());
     addModelRenderer(pPlaneRenderer);
-    
-    
+
+    /*
     auto pCubeRenderer = std::make_shared<ModelRenderer>(ResourceManager::getInstance().getModel(Mesh::BasicMesh::CUBE));
     pCubeRenderer->transform().translate(QVector3D(1.5f, 0.5f, 0.0f));
     pCubeRenderer->pShaderInScene = ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/ShadowShader");
     pCubeRenderer->pShaderInDepthScene = ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/DepthShader");
-    pCubeRenderer->model().mModelNodes[0].mMaterial.addTexture("uTexture", texture->textureId());
+    pCubeRenderer->model().mModelNodes[0].mMaterial.setTexture("uTexture", texture->textureId());
     addModelRenderer(pCubeRenderer);
-    
-    
+
     auto pSphereRenderer = std::make_shared<ModelRenderer>(ResourceManager::getInstance().getModel(Mesh::BasicMesh::SPHERE));
     pSphereRenderer->transform().translate(QVector3D(-1.5f, 0.5f, 0.0f));
     pSphereRenderer->setRenderMode(GL_TRIANGLE_STRIP);
     pSphereRenderer->pShaderInScene = ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/ShadowShader");
     pSphereRenderer->pShaderInDepthScene = ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/DepthShader");
-    pSphereRenderer->model().mModelNodes[0].mMaterial.addTexture("uTexture", texture->textureId());
+    pSphereRenderer->model().mModelNodes[0].mMaterial.setTexture("uTexture", texture->textureId());
     addModelRenderer(pSphereRenderer);
-     
-    
+    */
+    {
+        auto pSphereRenderer = std::make_shared<ModelRenderer>(ResourceManager::getInstance().getModel(Mesh::BasicMesh::SPHERE));
+        pSphereRenderer->transform().translate(QVector3D(-2.0f, 1.0f, 1.0f));
+        pSphereRenderer->setRenderMode(GL_TRIANGLE_STRIP);
+        pSphereRenderer->pShaderInScene = ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/PhongShader");
+        pSphereRenderer->pShaderInDepthScene = ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/DepthShader");
+        pSphereRenderer->receiveShadow = false;
+        addModelRenderer(pSphereRenderer);
+    }
+    {
+        auto pSphereRenderer = std::make_shared<ModelRenderer>(ResourceManager::getInstance().getModel(Mesh::BasicMesh::SPHERE));
+        pSphereRenderer->transform().translate(QVector3D(2.0f, 1.0f, 1.0f));
+        pSphereRenderer->setRenderMode(GL_TRIANGLE_STRIP);
+        pSphereRenderer->pShaderInScene = ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/ToonShader");
+        pSphereRenderer->pShaderInDepthScene = ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/DepthShader");
+        pSphereRenderer->receiveShadow = false;
+        addModelRenderer(pSphereRenderer);
+    }
+
+    /*
     auto pModelRenderer = std::make_shared<ModelRenderer>(ResourceManager::getInstance().getModel("D:/ProjectFiles/Cpp/Renderer/Renderer/resources/models/obj/nanosuit/nanosuit.obj"));
     pModelRenderer->pShaderInScene = ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/PhongShader");
     pModelRenderer->pShaderInDepthScene = ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/DepthShader");
-    pModelRenderer->transform().translate(QVector3D(0.0f, 0.0f, -5.0f));
+    pModelRenderer->transform().translate(QVector3D(0.0f, 0.0f, -10.0f));
+    pModelRenderer->receiveShadow = false;
     addModelRenderer(pModelRenderer);
-
+    */
+    /*
+    {
+        auto pModelRenderer = std::make_shared<ModelRenderer>(ResourceManager::getInstance().getModel("D:/ProjectFiles/Cpp/Renderer/Renderer/resources/models/fbx/Mei/Mei.fbx"));
+        pModelRenderer->pShaderInScene = ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/PhongShader");
+        pModelRenderer->pShaderInDepthScene = ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/DepthShader");
+        pModelRenderer->transform().translate(QVector3D(-5.0f, 1.0f, -5.0f));
+        pModelRenderer->transform().scale(10.0f);
+        pModelRenderer->transform().rotate(-90.0f, QVector3D(1.0f, 0.0f, 0.0f));
+        pModelRenderer->receiveShadow = false;
+        addModelRenderer(pModelRenderer);
+    }
+    {
+        auto pModelRenderer = std::make_shared<ModelRenderer>(ResourceManager::getInstance().getModel("D:/ProjectFiles/Cpp/Renderer/Renderer/resources/models/fbx/Mei/Mei.fbx"));
+        pModelRenderer->pShaderInScene = ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/ToonShader");
+        pModelRenderer->pShaderInDepthScene = ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/DepthShader");
+        pModelRenderer->transform().translate(QVector3D(5.0f, 1.0f, -5.0f));
+        pModelRenderer->transform().scale(10.0f);
+        pModelRenderer->transform().rotate(-90.0f, QVector3D(1.0f, 0.0f, 0.0f));
+        pModelRenderer->receiveShadow = false;
+        addModelRenderer(pModelRenderer);
+    }
+    */
 }
 
 void OpenGLWidget::initializeGL()
@@ -150,7 +191,6 @@ void OpenGLWidget::paintGL()
     deltaTime = lastFrame.msecsTo(currentFrame);
     lastFrame = currentFrame;
     camera->setDeltaTime((float)deltaTime / 1000.0f);
-
     camera->control();
 
     renderDepthScene();
@@ -179,7 +219,7 @@ void OpenGLWidget::renderScene()
             modelRenderers[i]->bindShader(modelRenderers[i]->pShaderInScene);
             modelRenderers[i]->bindCamera(*camera);
             modelRenderers[i]->bindLight(directionalLight);
-            modelRenderers[i]->bindDepthMap(depthFBO->texture());
+            modelRenderers[i]->bindDepthMap(depthFBO->texture());            
             modelRenderers[i]->draw();
         }
     }
@@ -197,7 +237,7 @@ void OpenGLWidget::renderDepthScene()
 
         for(int i = 0; i < modelRenderers.count(); i++){
             if(modelRenderers[i]->isVisible){
-                if(modelRenderers[i]->shadowCast){
+                if(modelRenderers[i]->castShadow){
                     modelRenderers[i]->bindShader(modelRenderers[i]->pShaderInDepthScene);
                     modelRenderers[i]->bindLight(directionalLight);
                     modelRenderers[i]->draw();
@@ -207,7 +247,7 @@ void OpenGLWidget::renderDepthScene()
 
         /*
         QImage image = depthFBO->toImage();
-        image.save("D:/ProjectFiles/Qt/Renderer/resources/depthMap.png");
+        image.save("D:/ProjectFiles/Cpp/Renderer/Renderer/resources/depthMap.png");
         */
 
         glDisable(GL_DEPTH_TEST);
