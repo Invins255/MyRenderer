@@ -45,8 +45,7 @@ void ModelRenderer::bindCamera(const Camera &camera)
         pShader->bind();
 
         QMatrix4x4 projection;
-        //TODO：这里将长宽比固定为1:1，当OpenGlWidget长宽比改变时可能导致显示的错误，需要进行适配处理
-        projection.perspective(camera.Zoom,(float)(600)/(float)(600),camera.NearPlane,camera.FarPlane);
+        projection.perspective(camera.Zoom,(float)(camera.width)/(float)(camera.height),camera.NearPlane,camera.FarPlane);
         QMatrix4x4 view;
         view = camera.getViewMatrix();
 

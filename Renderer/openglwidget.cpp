@@ -45,19 +45,27 @@ void OpenGLWidget::initialize()
 void OpenGLWidget::initializeFBO()
 {
     depthFBO = std::make_unique<QOpenGLFramebufferObject>(
-                directionalLight.resolution,
-                directionalLight.resolution,
-                QOpenGLFramebufferObject::Depth
-                );
+        directionalLight.resolution,
+        directionalLight.resolution,
+        QOpenGLFramebufferObject::Depth
+        );
+    screenFBO = std::make_unique<QOpenGLFramebufferObject>(
+        width() ,
+        height() ,
+        QOpenGLFramebufferObject::CombinedDepthStencil,
+        GL_TEXTURE_2D, 
+        GL_RGB
+        );
 }
 
 void OpenGLWidget::initializeCamera()
 {
     camera = std::make_unique<OrbitCamera>(
-                QVector3D(0.0f, 10.0f, 10.0f),
+                QVector3D(0.0f, 15.0f, 15.0f),
                 QVector3D(0.0f, 5.0f, 0.0f),
                 QVector3D(0.0f, 1.0f, 0.0f)
                 );
+    camera->setSize(width(), height());
 }
 
 void OpenGLWidget::initializeLights()
@@ -96,6 +104,9 @@ void OpenGLWidget::printContextInfomation()
 
 void OpenGLWidget::loadResources() {
     ResourceManager::getInstance().loadResources();
+
+    quadRenderer = std::make_unique<ModelRenderer>(ResourceManager::getInstance().getModel(Mesh::BasicMesh::QUAD));
+    quadRenderer->pShaderInScene = ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/PostProcess/NoProcessing");
 
     //天空盒渲染器
     auto cubeMap = ResourceManager::getInstance().getCubeMap("D:/ProjectFiles/Cpp/Renderer/Renderer/resources/textures/skybox/Space");
@@ -195,7 +206,7 @@ void OpenGLWidget::paintGL()
 
     renderDepthScene();
     renderScene();
-    renderSkybox();
+    renderQuad();
 
     Input::getInstance().reset();
 
@@ -209,22 +220,28 @@ void OpenGLWidget::resizeGL(int w, int h)
 
 void OpenGLWidget::renderScene()
 {
-    glEnable(GL_DEPTH_TEST);
-    glViewport(0, 0, width() * 4.0 / 3.0, height() * 4.0 / 3.0);
-    glClearColor(bgColor.x(), bgColor.y(), bgColor.z(), bgColor.w());
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    screenFBO->bind();
+        glViewport(0, 0, width(), height());
+        glEnable(GL_DEPTH_TEST);
+        glClearColor(bgColor.x(), bgColor.y(), bgColor.z(), bgColor.w());
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            for(int i = 0; i < modelRenderers.count(); i++){
+                if(modelRenderers[i]->isVisible){
+                    modelRenderers[i]->bindShader(modelRenderers[i]->pShaderInScene);
+                    modelRenderers[i]->bindCamera(*camera);
+                    modelRenderers[i]->bindLight(directionalLight);
+                    modelRenderers[i]->bindDepthMap(depthFBO->texture());            
+                    modelRenderers[i]->draw();
+                }
+            }
+        glDisable(GL_DEPTH_TEST);
 
-    for(int i = 0; i < modelRenderers.count(); i++){
-        if(modelRenderers[i]->isVisible){
-            modelRenderers[i]->bindShader(modelRenderers[i]->pShaderInScene);
-            modelRenderers[i]->bindCamera(*camera);
-            modelRenderers[i]->bindLight(directionalLight);
-            modelRenderers[i]->bindDepthMap(depthFBO->texture());            
-            modelRenderers[i]->draw();
-        }
-    }
-
-    glDisable(GL_DEPTH_TEST);
+        renderSkybox();
+        /*
+        QImage image = screenFBO->toImage();
+        image.save("D:/ProjectFiles/Cpp/Renderer/Renderer/resources/screenFBO.png");
+        */
+    screenFBO->release();
 }
 
 void OpenGLWidget::renderDepthScene()
@@ -234,7 +251,6 @@ void OpenGLWidget::renderDepthScene()
         glEnable(GL_DEPTH_TEST);
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_DEPTH_BUFFER_BIT);
-
         for(int i = 0; i < modelRenderers.count(); i++){
             if(modelRenderers[i]->isVisible){
                 if(modelRenderers[i]->castShadow){
@@ -259,12 +275,19 @@ void OpenGLWidget::renderSkybox()
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
     glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
-    skyboxRenderer->bindShader(skyboxRenderer->pShaderInScene);
-    skyboxRenderer->bindCamera(*camera);
-    skyboxRenderer->draw();
+        skyboxRenderer->bindShader(skyboxRenderer->pShaderInScene);
+        skyboxRenderer->bindCamera(*camera);
+        skyboxRenderer->draw();
     glDisable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
     glDepthFunc(GL_LESS);
     glDisable(GL_DEPTH_TEST);
+}
+
+void OpenGLWidget::renderQuad()
+{
+    quadRenderer->bindShader(quadRenderer->pShaderInScene);
+    quadRenderer->model().mModelNodes[0].mMaterial.setTexture(SCREENTEXTURE, screenFBO->texture());
+    quadRenderer->draw();
 }
 
 void OpenGLWidget::wheelEvent(QWheelEvent *event)

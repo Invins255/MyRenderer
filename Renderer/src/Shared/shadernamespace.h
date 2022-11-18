@@ -37,4 +37,7 @@
 //cubeMap
 #define CUBEMAP				"uCubeMap"
 
+//postProcess
+#define SCREENTEXTURE		"uScreenTexture"
+
 #endif

@@ -14,7 +14,8 @@ public:
     OpenGLWidget* glWidget;
 
 private:
-
     void initializeGUI();
 
+protected:
+    virtual QSize sizeHint() const;
 };

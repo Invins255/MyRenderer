@@ -194,11 +194,14 @@ void Mesh::initializeQuad()
         // positions            // Normals          // texture Coords
         -1.0f,  1.0f, 0.0f,     0.0f, 0.0f, 0.0f,   0.0f, 1.0f,
         -1.0f, -1.0f, 0.0f,     0.0f, 0.0f, 0.0f,   0.0f, 0.0f,
-         1.0f,  1.0f, 0.0f,     0.0f, 0.0f, 0.0f,   1.0f, 1.0f,
          1.0f, -1.0f, 0.0f,     0.0f, 0.0f, 0.0f,   1.0f, 0.0f,
+
+        -1.0f,  1.0f, 0.0f,     0.0f, 0.0f, 0.0f,   0.0f, 1.0f,
+         1.0f, -1.0f, 0.0f,     0.0f, 0.0f, 0.0f,   1.0f, 0.0f,
+         1.0f,  1.0f, 0.0f,     0.0f, 0.0f, 0.0f,   1.0f, 1.0f,
     };
 
-    for(int i = 0; i < 4; i++){
+    for(int i = 0; i < 6; i++){
         Vertex v;
         v.position = QVector3D(datas[8*i],datas[8*i+1],datas[8*i+2]);
         v.normal = QVector3D(datas[8*i+3],datas[8*i+4],datas[8*i+5]);

@@ -24,6 +24,9 @@ public:
     QVector3D WorldUp;
     QVector3D Right;
     QVector3D Up;
+    
+    int width = 600;
+    int height = 600;
 
     float NearPlane = 0.1f;
     float FarPlane = 100.0f;
@@ -40,6 +43,8 @@ public:
     virtual ~Camera() = default;
     virtual const QMatrix4x4 getViewMatrix() const = 0;
     virtual void control() = 0;
+
+    void setSize(int w, int h) { width = w; height = h; };
 protected:
     float deltaTime = 0.01f;
 

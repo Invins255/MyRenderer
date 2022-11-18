@@ -41,7 +41,9 @@ private:
     QVector<PointLight> pointLights;
     //帧缓冲区
     std::unique_ptr<QOpenGLFramebufferObject> depthFBO;
+    std::unique_ptr<QOpenGLFramebufferObject> screenFBO;
     //模型渲染器组
+    std::unique_ptr<ModelRenderer> quadRenderer;
     std::unique_ptr<ModelRenderer> skyboxRenderer;
     QVector<std::shared_ptr<ModelRenderer>> modelRenderers;
 
@@ -54,6 +56,7 @@ private:
     void renderScene();
     void renderDepthScene();
     void renderSkybox();
+    void renderQuad();
 
 protected:
     void initializeGL() override;
