@@ -56,6 +56,21 @@ void OpenGLWidget::initializeFBO()
         GL_TEXTURE_2D, 
         GL_RGB
         );
+
+    postProcessFBO[0] = std::make_unique<QOpenGLFramebufferObject>(
+        width(),
+        height(),
+        QOpenGLFramebufferObject::CombinedDepthStencil,
+        GL_TEXTURE_2D,
+        GL_RGB
+        );
+    postProcessFBO[1] = std::make_unique<QOpenGLFramebufferObject>(
+        width(),
+        height(),
+        QOpenGLFramebufferObject::CombinedDepthStencil,
+        GL_TEXTURE_2D,
+        GL_RGB
+        );
 }
 
 void OpenGLWidget::initializeCamera()
@@ -108,6 +123,11 @@ void OpenGLWidget::loadResources() {
     quadRenderer = std::make_unique<ModelRenderer>(ResourceManager::getInstance().getModel(Mesh::BasicMesh::QUAD));
     quadRenderer->pShaderInScene = ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/PostProcess/NoProcessing");
 
+    //postProcessPasses.push_back(ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/PostProcess/EdgeDetection"));
+    //postProcessPasses.push_back(ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/PostProcess/GrayScale"));
+    //postProcessPasses.push_back(ResourceManager::getInstance().getShader("D:/ProjectFiles/Cpp/Renderer/Renderer/src/Shaders/glsl/PostProcess/Sharpen"));
+
+
     //天空盒渲染器
     auto cubeMap = ResourceManager::getInstance().getCubeMap("D:/ProjectFiles/Cpp/Renderer/Renderer/resources/textures/skybox/Space");
     skyboxRenderer = std::make_unique<ModelRenderer>(ResourceManager::getInstance().getModel(Mesh::BasicMesh::CUBE));
@@ -115,7 +135,6 @@ void OpenGLWidget::loadResources() {
     skyboxRenderer->model().mModelNodes[0].mMaterial.setTexture(CUBEMAP, cubeMap->textureId());
 
     auto texture = ResourceManager::getInstance().getTexture("D:/ProjectFiles/Cpp/Renderer/Renderer/resources/textures/gray.png");
-
     auto pPlaneRenderer = std::make_shared<ModelRenderer>(ResourceManager::getInstance().getModel(Mesh::BasicMesh::PLANE));
     pPlaneRenderer->transform().translate(QVector3D(0.0f, -1.0f, 0.0f));
     pPlaneRenderer->transform().scale(10.0f);
@@ -206,6 +225,7 @@ void OpenGLWidget::paintGL()
 
     renderDepthScene();
     renderScene();
+    renderPostProcess();
     renderQuad();
 
     Input::getInstance().reset();
@@ -220,7 +240,8 @@ void OpenGLWidget::resizeGL(int w, int h)
 
 void OpenGLWidget::renderScene()
 {
-    screenFBO->bind();
+    //screenFBO->bind();
+    postProcessFBO[writableFBOIndex]->bind();
         glViewport(0, 0, width(), height());
         glEnable(GL_DEPTH_TEST);
         glClearColor(bgColor.x(), bgColor.y(), bgColor.z(), bgColor.w());
@@ -241,7 +262,9 @@ void OpenGLWidget::renderScene()
         QImage image = screenFBO->toImage();
         image.save("D:/ProjectFiles/Cpp/Renderer/Renderer/resources/screenFBO.png");
         */
-    screenFBO->release();
+    //screenFBO->release();
+    postProcessFBO[writableFBOIndex]->release();
+    writableFBOIndex = (int)(!writableFBOIndex);
 }
 
 void OpenGLWidget::renderDepthScene()
@@ -286,8 +309,23 @@ void OpenGLWidget::renderSkybox()
 void OpenGLWidget::renderQuad()
 {
     quadRenderer->bindShader(quadRenderer->pShaderInScene);
-    quadRenderer->model().mModelNodes[0].mMaterial.setTexture(SCREENTEXTURE, screenFBO->texture());
+    //quadRenderer->model().mModelNodes[0].mMaterial.setTexture(SCREENTEXTURE, screenFBO->texture());
+    quadRenderer->model().mModelNodes[0].mMaterial.setTexture(SCREENTEXTURE, postProcessFBO[(int)(!writableFBOIndex)]->texture());
     quadRenderer->draw();
+}
+
+void OpenGLWidget::renderPostProcess()
+{
+    glDisable(GL_DEPTH_TEST);
+    for (int i = 0; i < postProcessPasses.count(); i++) {
+        postProcessFBO[writableFBOIndex]->bind();
+            quadRenderer->bindShader(postProcessPasses[i]);
+            quadRenderer->model().mModelNodes[0].mMaterial.setTexture(SCREENTEXTURE, postProcessFBO[(int)(!writableFBOIndex)]->texture());
+            quadRenderer->draw();
+        postProcessFBO[writableFBOIndex]->release();
+        writableFBOIndex = (int)(!writableFBOIndex);
+    }
+    glEnable(GL_DEPTH_TEST);
 }
 
 void OpenGLWidget::wheelEvent(QWheelEvent *event)

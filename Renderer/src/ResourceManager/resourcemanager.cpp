@@ -9,7 +9,7 @@ QString ResourceManager::CubeMapInfo::bottomPattern = "(bottom|negy|negativey).(
 
 QString ResourceManager::ShaderInfo::vertexPattern = "(\\w*).(vert)";
 QString ResourceManager::ShaderInfo::fragmentPattern = "(\\w*).(frag)";
-QString ResourceManager::ShaderInfo::geometryPattern = "(\\w*).(geo)";
+QString ResourceManager::ShaderInfo::geometryPattern = "(\\w*).(geom)";
 
 
 ResourceManager::ResourceManager()

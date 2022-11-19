@@ -31,32 +31,39 @@ public:
 private:
     QVector4D bgColor = QVector4D(0.05f, 0.05f, 0.05f, 1.0f);
 
-    //帧率计算(单位/毫秒)
+    /*Frame Rate (msec)*/
     float deltaTime = 0.0f;
     QTime lastFrame;
-    //相机
+    /*Camera*/
     std::unique_ptr<Camera> camera;
-    //光源
+    /*Lights*/
     DirectionalLight directionalLight;
     QVector<PointLight> pointLights;
-    //帧缓冲区
+    /*FrameBuffers*/
     std::unique_ptr<QOpenGLFramebufferObject> depthFBO;
     std::unique_ptr<QOpenGLFramebufferObject> screenFBO;
-    //模型渲染器组
+    /*Model Renderers*/
     std::unique_ptr<ModelRenderer> quadRenderer;
     std::unique_ptr<ModelRenderer> skyboxRenderer;
     QVector<std::shared_ptr<ModelRenderer>> modelRenderers;
+    /*Post Process*/
+    QVector<std::shared_ptr<Shader>> postProcessPasses;
+    std::unique_ptr<QOpenGLFramebufferObject> postProcessFBO[2];
+    int writableFBOIndex = 0;
 
     void initialize();
     void initializeFBO();
     void initializeCamera();
     void initializeLights();
+
     void printContextInfomation();
     void loadResources();
+
     void renderScene();
     void renderDepthScene();
     void renderSkybox();
     void renderQuad();
+    void renderPostProcess();
 
 protected:
     void initializeGL() override;
